@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comida gatos</title>
+</head>
+<body>
+  <h1>🐱 Registro de comida</h1>
+
+  <h2>Luna</h2>
+  <input type="number" id="lunaGramos" placeholder="Gramos de Luna">
+
+  <h2>Milo</h2>
+  <input type="number" id="miloGramos" placeholder="Gramos de Milo">
+
+  <h2>Tipo de comida</h2>
+  <select id="tipo">
+    <option>Balanceado</option>
+    <option>Húmeda</option>
+    <option>Premio</option>
+    <option>Otra</option>
+  </select>
+
+  <h2>Quién registró</h2>
+  <select id="registro">
+    <option>Samantha</option>
+    <option>Mamá</option>
+    <option>Papá</option>
+  </select>
+
+  <h2>Observaciones</h2>
+  <textarea id="observaciones"></textarea>
+
+  <br><br>
+  <button onclick="registrarComida()">Registrar comida</button>
+
+  <script>
+    const URL_APPS_SCRIPT = "PEGA_AQUI_TU_LINK_DEL_APPS_SCRIPT";
+
+    function registrarComida() {
+      const lunaGramos = document.getElementById("lunaGramos").value;
+      const miloGramos = document.getElementById("miloGramos").value;
+      const tipo = document.getElementById("tipo").value;
+      const registro = document.getElementById("registro").value;
+      const observaciones = document.getElementById("observaciones").value;
+
+      if (!lunaGramos && !miloGramos) {
+        alert("Ingresa los gramos de al menos un gato");
+        return;
+      }
+
+      fetch(URL_APPS_SCRIPT, {
+        method: "POST",
+        body: JSON.stringify({
+          lunaGramos,
+          miloGramos,
+          tipo,
+          registro,
+          observaciones
+        })
+      })
+      .then(() => {
+        alert("Comida registrada ✅");
+        document.getElementById("lunaGramos").value = "";
+        document.getElementById("miloGramos").value = "";
+        document.getElementById("observaciones").value = "";
+      })
+      .catch(() => {
+        alert("Error al registrar");
+      });
+    }
+  </script>
+</body>
+</html>
